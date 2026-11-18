@@ -1,0 +1,46 @@
+{
+  "name": "pocket-todo",
+  "version": "0.1.0",
+  "description": "A little space for everything. Local desktop todos with MCP.",
+  "author": "Pocket Todo",
+  "private": true,
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/store.test.cjs tests/growth.test.cjs tests/window.test.cjs tests/mcp.test.cjs tests/renderer.test.cjs",
+    "test:ui": "node --test tests/ui.test.cjs",
+    "build:mac": "electron-builder --mac dir",
+    "build:win": "electron-builder --win nsis",
+    "mcp": "node src/mcp.cjs"
+  },
+  "build": {
+    "appId": "studio.pocket.todo",
+    "productName": "Pocket Todo",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "ui/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dir",
+      "identity": null
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "electron": "^45.3.4",
+    "electron-builder": "^26.18.0",
+    "jsdom": "^31.0.1",
+    "playwright": "^1.65.1"
+  }
+}
