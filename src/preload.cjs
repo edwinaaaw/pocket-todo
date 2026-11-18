@@ -1,0 +1,22 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('pocket',{
+  list:()=>ipcRenderer.invoke('todos:list'),
+  snapshot:after=>ipcRenderer.invoke('todos:snapshot',after),
+  growth:()=>ipcRenderer.invoke('growth'),
+  report:month=>ipcRenderer.invoke('report',month),
+  checkReports:()=>ipcRenderer.invoke('reports:check'),
+  exportReport:options=>ipcRenderer.invoke('report:export',options),
+  stopSeries:id=>ipcRenderer.invoke('series:stop',id),
+  skipPrevious:id=>ipcRenderer.invoke('series:skip',id),
+  add:input=>ipcRenderer.invoke('todos:add',input),
+  update:(id,patch)=>ipcRenderer.invoke('todos:update',id,patch),
+  remove:id=>ipcRenderer.invoke('todos:remove',id),
+  undo:()=>ipcRenderer.invoke('todos:undo'),
+  reorder:input=>ipcRenderer.invoke('todos:reorder',input),
+  preferences:value=>ipcRenderer.invoke('preferences',value),
+  connections:()=>ipcRenderer.invoke('connections'),
+  copy:text=>ipcRenderer.invoke('copy',text),
+  expand:value=>ipcRenderer.send('expand',value),
+  drag:phase=>ipcRenderer.send('drag',phase),
+  onMode:callback=>ipcRenderer.on('mode',(_event,expanded)=>callback(expanded))
+});
